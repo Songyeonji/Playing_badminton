@@ -80,38 +80,6 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
           </div>
         </div>
 
-        {/* Team Names */}
-        <div className="mb-8">
-          <label className="block text-lg font-bold text-gray-800 mb-4 text-center">
-            팀 이름 설정
-          </label>
-          <div className="space-y-3">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                팀 A 이름
-              </label>
-              <input
-                type="text"
-                value={teamAName}
-                onChange={(e) => setTeamAName(e.target.value)}
-                placeholder="팀 A"
-                className="w-full px-4 py-3 border-2 border-teal rounded-lg focus:outline-none focus:border-darkTeal bg-white text-gray-900 font-medium text-base"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                팀 B 이름
-              </label>
-              <input
-                type="text"
-                value={teamBName}
-                onChange={(e) => setTeamBName(e.target.value)}
-                placeholder="팀 B"
-                className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:outline-none focus:border-teal bg-white text-gray-900 font-medium text-base"
-              />
-            </div>
-          </div>
-        </div>
 
         {/* Confirm Button */}
         <button
