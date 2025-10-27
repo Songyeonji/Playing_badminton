@@ -55,23 +55,23 @@ export default function AggregateTable() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-3 no-print">
-        <button onClick={handleExportExcel} className="flex items-center gap-2 px-5 py-2.5 bg-accent text-gray-800 rounded-lg hover:bg-opacity-90 transition-all text-sm font-medium shadow-md hover:shadow-lg">
+        <button onClick={handleExportExcel} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-sm font-medium shadow-md hover:shadow-lg">
           <FaFileExcel className="text-lg" />
           엑셀 저장
         </button>
-        <button onClick={handleExportCSV} className="flex items-center gap-2 px-5 py-2.5 bg-accent text-gray-800 rounded-lg hover:bg-opacity-90 transition-all text-sm font-medium shadow-md hover:shadow-lg">
+        <button onClick={handleExportCSV} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-sm font-medium shadow-md hover:shadow-lg">
           <FaFileCsv className="text-lg" />
           CSV 저장
         </button>
-        <button onClick={handleExportPNG} className="flex items-center gap-2 px-5 py-2.5 bg-accent text-gray-800 rounded-lg hover:bg-opacity-90 transition-all text-sm font-medium shadow-md hover:shadow-lg">
+        <button onClick={handleExportPNG} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-sm font-medium shadow-md hover:shadow-lg">
           <FaFileImage className="text-lg" />
           PNG 저장
         </button>
       </div>
-      <div ref={tableRef} className="bg-white rounded-lg shadow-sm border border-accent overflow-hidden">
+      <div ref={tableRef} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-surface">
+            <thead className="bg-gray-100">
               <tr>
                 <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   <div className="flex items-center gap-1">
@@ -87,12 +87,11 @@ export default function AggregateTable() {
                 <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">득점</th>
                 <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">실점</th>
                 <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">득실차</th>
-                <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">승점</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {sortedPlayers.map((player, index) => (
-                <tr key={player.name} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50 transition-colors`}>
+                <tr key={player.name} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-cyan-50 transition-colors`}>
                   <td className="px-3 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center gap-2">
                       {index === 0 && <FaMedal className="text-yellow-400 text-lg" />}
@@ -111,7 +110,6 @@ export default function AggregateTable() {
                   <td className={`px-3 py-4 whitespace-nowrap text-sm text-center font-medium ${player.pointDiff > 0 ? 'text-green-600' : player.pointDiff < 0 ? 'text-red-600' : 'text-gray-500'}`}>
                     {player.pointDiff > 0 ? '+' : ''}{player.pointDiff}
                   </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm text-center font-bold text-blue-600">{player.winPoints}</td>
                 </tr>
               ))}
             </tbody>
