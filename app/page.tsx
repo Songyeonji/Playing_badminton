@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAppStore } from '@/lib/store';
 import InitialSetupModal from '@/components/InitialSetupModal';
 import Toast from '@/components/Toast';
-import { FaPlus, FaCalendar, FaTrash, FaInstagram } from 'react-icons/fa';
+import { FaPlus, FaCalendar, FaTrash, FaInstagram, FaEdit } from 'react-icons/fa';
 import { GiShuttlecock } from 'react-icons/gi';
 import type { SessionSettings } from '@/types';
 
@@ -18,10 +18,13 @@ export default function Home() {
     hideToast,
     createSession,
     deleteSession,
+    renameSession,
     completeInitialSetup,
   } = useAppStore();
 
   const [showSetup, setShowSetup] = useState(false);
+  const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
+  const [editingSessionName, setEditingSessionName] = useState('');
 
   const handleCreateSession = (settings: SessionSettings) => {
     const sessionName = `경기 ${new Date().toLocaleDateString('ko-KR')} ${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}`;
@@ -40,6 +43,27 @@ export default function Home() {
     if (window.confirm('이 집계를 삭제하시겠습니까?')) {
       deleteSession(sessionId);
     }
+  };
+
+  const handleEditSessionName = (sessionId: string, currentName: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setEditingSessionId(sessionId);
+    setEditingSessionName(currentName);
+  };
+
+  const handleSaveSessionName = (sessionId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (editingSessionName.trim()) {
+      renameSession(sessionId, editingSessionName.trim());
+    }
+    setEditingSessionId(null);
+    setEditingSessionName('');
+  };
+
+  const handleCancelEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setEditingSessionId(null);
+    setEditingSessionName('');
   };
 
   return (
@@ -111,10 +135,43 @@ export default function Home() {
                     className="bg-white rounded-xl shadow-md border-2 border-gray-200 hover:border-cyan-500 hover:shadow-lg transition-all cursor-pointer p-6"
                   >
                     <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold text-gray-900 mb-1">
-                          {session.name}
-                        </h3>
+                      <div className="flex-1 min-w-0">
+                        {editingSessionId === session.id ? (
+                          <div className="flex gap-2 mb-1" onClick={(e) => e.stopPropagation()}>
+                            <input
+                              type="text"
+                              value={editingSessionName}
+                              onChange={(e) => setEditingSessionName(e.target.value)}
+                              className="flex-1 px-2 py-1 border-2 border-cyan-500 rounded text-sm font-bold"
+                              autoFocus
+                            />
+                            <button
+                              onClick={(e) => handleSaveSessionName(session.id, e)}
+                              className="px-2 py-1 bg-cyan-600 text-white rounded text-xs hover:bg-cyan-700"
+                            >
+                              저장
+                            </button>
+                            <button
+                              onClick={handleCancelEdit}
+                              className="px-2 py-1 bg-gray-500 text-white rounded text-xs hover:bg-gray-600"
+                            >
+                              취소
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="text-lg font-bold text-gray-900 truncate">
+                              {session.name}
+                            </h3>
+                            <button
+                              onClick={(e) => handleEditSessionName(session.id, session.name, e)}
+                              className="text-gray-500 hover:text-cyan-600 p-1"
+                              title="이름 수정"
+                            >
+                              <FaEdit className="text-sm" />
+                            </button>
+                          </div>
+                        )}
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                           <FaCalendar className="text-xs" />
                           {new Date(session.createdAt).toLocaleString('ko-KR')}
@@ -122,7 +179,7 @@ export default function Home() {
                       </div>
                       <button
                         onClick={(e) => handleDeleteSession(session.id, e)}
-                        className="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded transition-colors"
+                        className="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded transition-colors flex-shrink-0"
                         title="삭제"
                       >
                         <FaTrash />

@@ -6,8 +6,9 @@ import { useAppStore } from '@/lib/store';
 import Toast from '@/components/Toast';
 import MatchRow from '@/components/MatchRow';
 import StagingList from '@/components/StagingList';
+import MatchList from '@/components/MatchList';
 import AggregateTable from '@/components/AggregateTable';
-import { FaHome, FaPlus, FaInstagram } from 'react-icons/fa';
+import { FaHome, FaPlus, FaInstagram, FaList } from 'react-icons/fa';
 import { IoStatsChart } from 'react-icons/io5';
 import { GiShuttlecock } from 'react-icons/gi';
 
@@ -60,7 +61,7 @@ export default function SessionPage() {
               <div>
                 <h1 className="text-2xl font-bold text-white">{session.name}</h1>
                 <p className="text-sm text-cyan-100">
-                  {session.settings.teamAName} vs {session.settings.teamBName} | {session.settings.totalPoints}점
+                  총점: {session.settings.totalPoints}점
                 </p>
               </div>
             </div>
@@ -89,6 +90,11 @@ export default function SessionPage() {
           {/* Staging List Section */}
           <section>
             <StagingList />
+          </section>
+
+          {/* Match List Section */}
+          <section>
+            <MatchList />
           </section>
 
           {/* Aggregate Results Section */}

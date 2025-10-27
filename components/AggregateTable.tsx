@@ -1,20 +1,61 @@
 'use client';
 
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useCurrentSession } from '@/lib/hooks';
 import { aggregateMatches, sortPlayersByRank } from '@/utils/aggregation';
 import { exportToExcel, exportToCSV, exportToPNG, generateFilename } from '@/utils/export';
-import { FaFileExcel, FaFileCsv, FaFileImage, FaTrophy, FaMedal } from 'react-icons/fa';
+import { FaFileExcel, FaFileCsv, FaFileImage, FaTrophy, FaMedal, FaSortUp, FaSortDown } from 'react-icons/fa';
+import type { PlayerAggregate } from '@/types';
+
+type SortField = 'name' | 'matchesWon' | 'matchesLost' | 'setsWon' | 'setsLost' | 'pointsFor' | 'pointsAgainst' | 'pointDiff';
+type SortDirection = 'asc' | 'desc';
 
 export default function AggregateTable() {
   const session = useCurrentSession();
   const tableRef = useRef<HTMLDivElement>(null);
+  const [sortField, setSortField] = useState<SortField | null>(null);
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   const sortedPlayers = useMemo(() => {
     if (!session) return [];
     const aggregated = aggregateMatches(session.matches, session.settings.totalPoints);
-    return sortPlayersByRank(aggregated);
-  }, [session]);
+    let ranked = sortPlayersByRank(aggregated);
+
+    if (sortField) {
+      ranked = [...ranked].sort((a, b) => {
+        let aValue: any = a[sortField];
+        let bValue: any = b[sortField];
+
+        if (typeof aValue === 'string') {
+          return sortDirection === 'asc'
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        } else {
+          return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+        }
+      });
+    }
+
+    return ranked;
+  }, [session, sortField, sortDirection]);
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
+
+  const SortIcon = ({ field }: { field: SortField }) => {
+    if (sortField !== field) return null;
+    return sortDirection === 'asc' ? (
+      <FaSortUp className="inline ml-1" />
+    ) : (
+      <FaSortDown className="inline ml-1" />
+    );
+  };
 
   const handleExportExcel = async () => {
     try {
@@ -79,14 +120,54 @@ export default function AggregateTable() {
                     순위
                   </div>
                 </th>
-                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">선수명</th>
-                <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">승</th>
-                <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">패</th>
-                <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">세트승</th>
-                <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">세트패</th>
-                <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">득점</th>
-                <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">실점</th>
-                <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">득실차</th>
+                <th
+                  onClick={() => handleSort('name')}
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  선수명 <SortIcon field="name" />
+                </th>
+                <th
+                  onClick={() => handleSort('matchesWon')}
+                  className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  승 <SortIcon field="matchesWon" />
+                </th>
+                <th
+                  onClick={() => handleSort('matchesLost')}
+                  className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  패 <SortIcon field="matchesLost" />
+                </th>
+                <th
+                  onClick={() => handleSort('setsWon')}
+                  className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  세트승 <SortIcon field="setsWon" />
+                </th>
+                <th
+                  onClick={() => handleSort('setsLost')}
+                  className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  세트패 <SortIcon field="setsLost" />
+                </th>
+                <th
+                  onClick={() => handleSort('pointsFor')}
+                  className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  득점 <SortIcon field="pointsFor" />
+                </th>
+                <th
+                  onClick={() => handleSort('pointsAgainst')}
+                  className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  실점 <SortIcon field="pointsAgainst" />
+                </th>
+                <th
+                  onClick={() => handleSort('pointDiff')}
+                  className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  득실차 <SortIcon field="pointDiff" />
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
