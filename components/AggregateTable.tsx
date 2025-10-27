@@ -58,21 +58,21 @@ export default function AggregateTable() {
       <div className="flex flex-wrap gap-3 no-print">
         <button
           onClick={handleExportExcel}
-          className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
+          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-lg hover:from-emerald-600 hover:to-green-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
           <FaFileExcel className="text-lg" />
           엑셀 저장
         </button>
         <button
           onClick={handleExportCSV}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
+          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
           <FaFileCsv className="text-lg" />
           CSV 저장
         </button>
         <button
           onClick={handleExportPNG}
-          className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
+          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
           <FaFileImage className="text-lg" />
           PNG 저장

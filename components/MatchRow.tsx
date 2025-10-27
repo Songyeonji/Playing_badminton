@@ -108,85 +108,101 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 mb-4 hover:shadow-lg transition-shadow">
-      {/* Team A */}
-      <div className="mb-4">
-        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-          <FaUsers className="text-blue-600" />
-          팀 A
+    <div className="bg-gradient-to-br from-white to-purple-50 rounded-xl shadow-lg border-2 border-purple-200 p-6 mb-4 hover:shadow-xl transition-all">
+      {/* Players Input - One Line */}
+      <div className="mb-6">
+        <label className="flex items-center gap-2 text-sm font-semibold text-purple-700 mb-3">
+          <FaUsers className="text-purple-600" />
+          선수 명단
         </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <input
-            type="text"
-            value={teamA1}
-            onChange={(e) => setTeamA1(e.target.value)}
-            placeholder="선수 1"
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            value={teamA2}
-            onChange={(e) => setTeamA2(e.target.value)}
-            placeholder="선수 2"
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Team A Players */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={teamA1}
+              onChange={(e) => setTeamA1(e.target.value)}
+              placeholder="선수 1"
+              className="w-28 px-3 py-2 border-2 border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+            />
+            <input
+              type="text"
+              value={teamA2}
+              onChange={(e) => setTeamA2(e.target.value)}
+              placeholder="선수 2"
+              className="w-28 px-3 py-2 border-2 border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+            />
+          </div>
+
+          {/* VS */}
+          <div className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold rounded-lg shadow-md">
+            VS
+          </div>
+
+          {/* Team B Players */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={teamB1}
+              onChange={(e) => setTeamB1(e.target.value)}
+              placeholder="선수 3"
+              className="w-28 px-3 py-2 border-2 border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white"
+            />
+            <input
+              type="text"
+              value={teamB2}
+              onChange={(e) => setTeamB2(e.target.value)}
+              placeholder="선수 4"
+              className="w-28 px-3 py-2 border-2 border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Team B */}
-      <div className="mb-4">
-        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-          <FaUsers className="text-red-600" />
-          팀 B
+      {/* Sets - Each Set in One Line */}
+      <div className="mb-6">
+        <label className="flex items-center justify-between text-sm font-semibold text-purple-700 mb-3">
+          <span>세트 점수</span>
+          {sets.length < 5 && (
+            <button
+              onClick={handleAddSet}
+              className="flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-800 font-medium bg-indigo-50 px-3 py-1 rounded-lg hover:bg-indigo-100 transition-colors"
+            >
+              <IoAddCircle className="text-lg" />
+              세트 추가
+            </button>
+          )}
         </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <input
-            type="text"
-            value={teamB1}
-            onChange={(e) => setTeamB1(e.target.value)}
-            placeholder="선수 1"
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            value={teamB2}
-            onChange={(e) => setTeamB2(e.target.value)}
-            placeholder="선수 2"
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-      </div>
-
-      {/* Sets */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          세트 점수
-        </label>
-        <div className="space-y-2">
+        <div className="space-y-3">
           {sets.map((set, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-600 w-16">
-                세트 {index + 1}:
+            <div key={index} className="flex items-center gap-3 bg-white/70 p-3 rounded-lg border border-purple-200">
+              <span className="text-sm font-bold text-purple-700 w-16">
+                세트 {index + 1}
               </span>
-              <input
-                type="number"
-                value={set.a}
-                onChange={(e) => handleSetChange(index, 'a', e.target.value)}
-                className="w-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                min="0"
-              />
-              <span className="text-gray-500">:</span>
-              <input
-                type="number"
-                value={set.b}
-                onChange={(e) => handleSetChange(index, 'b', e.target.value)}
-                className="w-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                min="0"
-              />
+
+              {/* Score Inputs */}
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  value={set.a}
+                  onChange={(e) => handleSetChange(index, 'a', e.target.value)}
+                  className="w-16 px-3 py-2 border-2 border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-center font-bold bg-white"
+                  min="0"
+                />
+                <span className="text-2xl font-bold text-gray-400">:</span>
+                <input
+                  type="number"
+                  value={set.b}
+                  onChange={(e) => handleSetChange(index, 'b', e.target.value)}
+                  className="w-16 px-3 py-2 border-2 border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 text-center font-bold bg-white"
+                  min="0"
+                />
+              </div>
+
               {sets.length > 1 && (
                 <button
                   onClick={() => handleRemoveSet(index)}
-                  className="text-red-600 hover:text-red-800 text-xl flex items-center gap-1"
+                  className="text-red-500 hover:text-red-700 text-2xl ml-auto"
                   title="세트 삭제"
                 >
                   <IoRemoveCircle />
@@ -195,21 +211,12 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
             </div>
           ))}
         </div>
-        {sets.length < 5 && (
-          <button
-            onClick={handleAddSet}
-            className="mt-2 flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium"
-          >
-            <IoAddCircle className="text-lg" />
-            세트 추가
-          </button>
-        )}
       </div>
 
       {/* Errors */}
       {errors.length > 0 && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-          <ul className="text-sm text-red-600 list-disc list-inside">
+        <div className="mb-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg">
+          <ul className="text-sm text-red-700 list-disc list-inside space-y-1">
             {errors.map((error, index) => (
               <li key={index}>{error}</li>
             ))}
@@ -218,10 +225,10 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
       )}
 
       {/* Actions */}
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         <button
           onClick={handleSave}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors shadow-sm"
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg font-medium"
         >
           <IoSave className="text-lg" />
           저장
@@ -229,7 +236,7 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
         {match && (
           <button
             onClick={handleDelete}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors shadow-sm"
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-lg hover:from-red-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg font-medium"
           >
             <IoTrash className="text-lg" />
             삭제
@@ -238,7 +245,7 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
         {onCancel && (
           <button
             onClick={onCancel}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+            className="flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
           >
             <IoClose className="text-lg" />
             취소

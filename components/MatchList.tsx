@@ -23,15 +23,15 @@ export default function MatchList() {
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="flex items-center gap-2 text-xl font-bold text-gray-900">
-          <FaListUl className="text-blue-600" />
+        <h2 className="flex items-center gap-2 text-xl font-bold text-purple-700">
+          <FaListUl className="text-purple-600" />
           경기 목록
         </h2>
         <div className="flex gap-2">
           {matches.length > 0 && (
             <button
               onClick={handleClearAll}
-              className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors text-sm font-medium no-print"
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-100 to-pink-100 text-red-700 rounded-lg hover:from-red-200 hover:to-pink-200 transition-all text-sm font-medium no-print border border-red-200"
             >
               <MdDeleteSweep className="text-lg" />
               전체 삭제
@@ -39,7 +39,7 @@ export default function MatchList() {
           )}
           <button
             onClick={() => setShowNewMatch(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium no-print shadow-md"
+            className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all text-sm font-medium no-print shadow-md hover:shadow-lg"
           >
             <IoAddCircle className="text-lg" />
             경기 추가
