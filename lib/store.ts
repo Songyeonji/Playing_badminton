@@ -32,6 +32,9 @@ export const useAppStore = create<AppState>()(
       settings: {
         totalPoints: 21,
         mergePlayersByName: true,
+        teamAName: '팀 A',
+        teamBName: '팀 B',
+        initialSetupDone: false,
       },
       matches: [],
 

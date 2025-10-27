@@ -1,13 +1,37 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import TopBar from '@/components/TopBar';
 import MatchList from '@/components/MatchList';
 import AggregateTable from '@/components/AggregateTable';
+import InitialSetupModal from '@/components/InitialSetupModal';
 import { IoStatsChart } from 'react-icons/io5';
+import { useAppStore } from '@/lib/store';
+import type { TotalPoints } from '@/types';
 
 export default function Home() {
+  const { settings, setSettings } = useAppStore();
+  const [showSetup, setShowSetup] = useState(false);
+
+  useEffect(() => {
+    // Check if initial setup is done
+    if (!settings.initialSetupDone) {
+      setShowSetup(true);
+    }
+  }, [settings.initialSetupDone]);
+
+  const handleSetupComplete = (totalPoints: TotalPoints) => {
+    setSettings({
+      totalPoints,
+      initialSetupDone: true
+    });
+    setShowSetup(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
+      {showSetup && <InitialSetupModal onComplete={handleSetupComplete} />}
+
       <TopBar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

@@ -30,6 +30,9 @@ export type TotalPoints = 21 | 25;
 export interface AppSettings {
   totalPoints: TotalPoints;
   mergePlayersByName: boolean; // true = merge same names
+  teamAName: string;
+  teamBName: string;
+  initialSetupDone: boolean;
 }
 
 export interface AppState {
