@@ -58,21 +58,21 @@ export default function AggregateTable() {
       <div className="flex flex-wrap gap-3 no-print">
         <button
           onClick={handleExportExcel}
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-lg hover:from-emerald-600 hover:to-green-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
+          className="flex items-center gap-2 px-5 py-2.5 bg-accent text-gray-800 rounded-lg hover:bg-opacity-90 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
           <FaFileExcel className="text-lg" />
           엑셀 저장
         </button>
         <button
           onClick={handleExportCSV}
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
+          className="flex items-center gap-2 px-5 py-2.5 bg-accent text-gray-800 rounded-lg hover:bg-opacity-90 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
           <FaFileCsv className="text-lg" />
           CSV 저장
         </button>
         <button
           onClick={handleExportPNG}
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
+          className="flex items-center gap-2 px-5 py-2.5 bg-accent text-gray-800 rounded-lg hover:bg-opacity-90 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
           <FaFileImage className="text-lg" />
           PNG 저장
@@ -80,10 +80,10 @@ export default function AggregateTable() {
       </div>
 
       {/* Table */}
-      <div ref={tableRef} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div ref={tableRef} className="bg-white rounded-lg shadow-sm border border-accent overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+            <thead className="bg-surface">
               <tr>
                 <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   <div className="flex items-center gap-1">

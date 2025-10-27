@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import localforage from 'localforage';
+import { nanoid } from 'nanoid';
 import type { AppState, MatchInput } from '@/types';
 
 // Configure localforage for IndexedDB
@@ -37,6 +38,8 @@ export const useAppStore = create<AppState>()(
         initialSetupDone: false,
       },
       matches: [],
+      stagedMatches: [],
+      toastMessage: null,
 
       setSettings: (newSettings) =>
         set((state) => ({
@@ -63,6 +66,37 @@ export const useAppStore = create<AppState>()(
       clearAllMatches: () =>
         set(() => ({
           matches: [],
+        })),
+
+      addStagedMatch: (match) =>
+        set((state) => ({
+          stagedMatches: [...state.stagedMatches, match],
+        })),
+
+      removeStagedMatch: (id) =>
+        set((state) => ({
+          stagedMatches: state.stagedMatches.filter((match) => match.id !== id),
+        })),
+
+      commitStagedMatches: () =>
+        set((state) => ({
+          matches: [...state.matches, ...state.stagedMatches],
+          stagedMatches: [],
+        })),
+
+      clearStagedMatches: () =>
+        set(() => ({
+          stagedMatches: [],
+        })),
+
+      showToast: (message) =>
+        set(() => ({
+          toastMessage: { id: nanoid(), message },
+        })),
+
+      hideToast: () =>
+        set(() => ({
+          toastMessage: null,
         })),
     }),
     {
