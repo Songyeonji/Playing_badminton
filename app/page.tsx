@@ -70,7 +70,7 @@ export default function Home() {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-24 sm:pb-28">
         {/* New Session Button */}
         <div className="mb-8">
           <button
@@ -157,24 +157,24 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-600">
-            <div className="flex items-center gap-2">
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-3">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm text-gray-600">
+            <div className="flex items-center gap-2 text-xs">
               <span>© moon._.kkkok</span>
               <span className="text-gray-400">|</span>
               <span>개발자: songyounji</span>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="text-xs">배드민턴 경기 기록 v2.0 • 데이터는 브라우저에 안전하게 저장됩니다 (IndexedDB)</span>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="text-[10px] sm:text-xs text-center">배드민턴 경기 기록 v2.0 • IndexedDB</span>
               <a
                 href="https://www.instagram.com/moon._.kkkok?igsh=MXd6bnNjNXE0bTBoMw=="
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-pink-600 hover:text-pink-700 transition-colors"
+                className="text-pink-600 hover:text-pink-700 transition-colors flex-shrink-0"
                 title="Instagram"
               >
-                <FaInstagram className="text-xl" />
+                <FaInstagram className="text-lg sm:text-xl" />
               </a>
             </div>
           </div>
