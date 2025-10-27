@@ -54,18 +54,18 @@ export default function AggregateTable() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-3 no-print">
-        <button onClick={handleExportExcel} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-sm font-medium shadow-md hover:shadow-lg">
-          <FaFileExcel className="text-lg" />
-          엑셀 저장
+      <div className="flex flex-wrap gap-2 sm:gap-3 no-print">
+        <button onClick={handleExportExcel} className="flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-xs sm:text-sm font-medium shadow-md hover:shadow-lg">
+          <FaFileExcel className="text-base sm:text-lg" />
+          엑셀
         </button>
-        <button onClick={handleExportCSV} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-sm font-medium shadow-md hover:shadow-lg">
-          <FaFileCsv className="text-lg" />
-          CSV 저장
+        <button onClick={handleExportCSV} className="flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-xs sm:text-sm font-medium shadow-md hover:shadow-lg">
+          <FaFileCsv className="text-base sm:text-lg" />
+          CSV
         </button>
-        <button onClick={handleExportPNG} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-sm font-medium shadow-md hover:shadow-lg">
-          <FaFileImage className="text-lg" />
-          PNG 저장
+        <button onClick={handleExportPNG} className="flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all text-xs sm:text-sm font-medium shadow-md hover:shadow-lg">
+          <FaFileImage className="text-base sm:text-lg" />
+          PNG
         </button>
       </div>
       <div ref={tableRef} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
