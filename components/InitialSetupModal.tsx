@@ -3,31 +3,37 @@
 import { useState } from 'react';
 import { GiShuttlecock } from 'react-icons/gi';
 import { IoCheckmarkCircle } from 'react-icons/io5';
-import type { TotalPoints } from '@/types';
+import type { TotalPoints, SessionSettings } from '@/types';
 
 interface InitialSetupModalProps {
-  onComplete: (totalPoints: TotalPoints) => void;
+  onComplete: (settings: SessionSettings) => void;
 }
 
 export default function InitialSetupModal({ onComplete }: InitialSetupModalProps) {
   const [selectedPoints, setSelectedPoints] = useState<TotalPoints>(21);
+  const [teamAName, setTeamAName] = useState('팀 A');
+  const [teamBName, setTeamBName] = useState('팀 B');
 
   const handleConfirm = () => {
-    onComplete(selectedPoints);
+    onComplete({
+      totalPoints: selectedPoints,
+      teamAName: teamAName.trim() || '팀 A',
+      teamBName: teamBName.trim() || '팀 B',
+    });
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 transform transition-all">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 transform transition-all max-h-[90vh] overflow-y-auto">
         {/* Icon */}
         <div className="flex justify-center mb-6">
-          <div className="bg-primary rounded-full p-6">
+          <div className="bg-darkTeal rounded-full p-6">
             <GiShuttlecock className="text-6xl text-white" />
           </div>
         </div>
 
         {/* Title */}
-        <h2 className="text-3xl font-bold text-center mb-2 text-primary">
+        <h2 className="text-3xl font-bold text-center mb-2 text-darkTeal">
           배드민턴 경기 기록
         </h2>
         <p className="text-center text-gray-600 mb-8 text-lg">
@@ -35,7 +41,7 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
         </p>
 
         {/* Total Points Selection */}
-        <div className="mb-8">
+        <div className="mb-6">
           <label className="block text-lg font-bold text-gray-800 mb-4 text-center">
             경기 총점을 선택하세요
           </label>
@@ -44,14 +50,14 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
               onClick={() => setSelectedPoints(21)}
               className={`relative p-6 rounded-xl border-4 transition-all ${
                 selectedPoints === 21
-                  ? 'border-primary bg-surface shadow-lg scale-105'
+                  ? 'border-teal bg-lightTeal/20 shadow-lg scale-105'
                   : 'border-gray-200 bg-white hover:border-accent hover:shadow-md'
               }`}
             >
               {selectedPoints === 21 && (
-                <IoCheckmarkCircle className="absolute top-2 right-2 text-3xl text-primary" />
+                <IoCheckmarkCircle className="absolute top-2 right-2 text-3xl text-teal" />
               )}
-              <div className="text-5xl font-bold text-primary mb-2">21</div>
+              <div className="text-5xl font-bold text-teal mb-2">21</div>
               <div className="text-sm text-gray-700 font-medium">일반 경기</div>
               <div className="text-xs text-gray-500 mt-1">승리 시 11점</div>
             </button>
@@ -60,7 +66,7 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
               onClick={() => setSelectedPoints(25)}
               className={`relative p-6 rounded-xl border-4 transition-all ${
                 selectedPoints === 25
-                  ? 'border-accent bg-surface shadow-lg scale-105'
+                  ? 'border-accent bg-lightTeal/20 shadow-lg scale-105'
                   : 'border-gray-200 bg-white hover:border-accent hover:shadow-md'
               }`}
             >
@@ -74,17 +80,46 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
           </div>
         </div>
 
+        {/* Team Names */}
+        <div className="mb-8">
+          <label className="block text-lg font-bold text-gray-800 mb-4 text-center">
+            팀 이름 설정
+          </label>
+          <div className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                팀 A 이름
+              </label>
+              <input
+                type="text"
+                value={teamAName}
+                onChange={(e) => setTeamAName(e.target.value)}
+                placeholder="팀 A"
+                className="w-full px-4 py-3 border-2 border-teal rounded-lg focus:outline-none focus:border-darkTeal bg-white text-gray-900 font-medium text-base"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                팀 B 이름
+              </label>
+              <input
+                type="text"
+                value={teamBName}
+                onChange={(e) => setTeamBName(e.target.value)}
+                placeholder="팀 B"
+                className="w-full px-4 py-3 border-2 border-accent rounded-lg focus:outline-none focus:border-teal bg-white text-gray-900 font-medium text-base"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Confirm Button */}
         <button
           onClick={handleConfirm}
-          className="w-full py-4 bg-primary text-white text-lg font-bold rounded-xl hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl"
+          className="w-full py-4 bg-teal text-white text-lg font-bold rounded-xl hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl"
         >
           시작하기
         </button>
-
-        <p className="text-center text-xs text-gray-500 mt-4">
-          언제든지 상단에서 변경할 수 있습니다
-        </p>
       </div>
     </div>
   );

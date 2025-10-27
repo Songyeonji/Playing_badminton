@@ -10,6 +10,8 @@ export interface MatchInput {
   teamA: [PlayerName, PlayerName];
   teamB: [PlayerName, PlayerName];
   sets: SetScore[];
+  totalScoreA?: number; // VS 사이 입력 필드용
+  totalScoreB?: number; // VS 사이 입력 필드용
   timestamp: number;
 }
 
@@ -27,12 +29,19 @@ export interface PlayerAggregate {
 
 export type TotalPoints = 21 | 25;
 
-export interface AppSettings {
+export interface SessionSettings {
   totalPoints: TotalPoints;
-  mergePlayersByName: boolean; // true = merge same names
   teamAName: string;
   teamBName: string;
-  initialSetupDone: boolean;
+}
+
+export interface Session {
+  id: string;
+  name: string;
+  createdAt: number;
+  settings: SessionSettings;
+  matches: MatchInput[]; // 집계 완료된 경기들
+  stagedMatches: MatchInput[]; // 스테이징 영역: 아직 집계되지 않은 경기들
 }
 
 export interface ToastMessage {
@@ -41,19 +50,32 @@ export interface ToastMessage {
 }
 
 export interface AppState {
-  settings: AppSettings;
-  matches: MatchInput[];
-  stagedMatches: MatchInput[]; // 스테이징 영역: 아직 집계되지 않은 경기들
+  sessions: Session[];
+  currentSessionId: string | null;
   toastMessage: ToastMessage | null;
-  setSettings: (settings: Partial<AppSettings>) => void;
-  addMatch: (match: MatchInput) => void;
-  updateMatch: (id: string, match: Partial<MatchInput>) => void;
-  deleteMatch: (id: string) => void;
+  initialSetupDone: boolean;
+
+  // Session management
+  createSession: (name: string, settings: SessionSettings) => string; // returns session id
+  deleteSession: (sessionId: string) => void;
+  setCurrentSession: (sessionId: string | null) => void;
+  updateSessionSettings: (sessionId: string, settings: Partial<SessionSettings>) => void;
+  renameSession: (sessionId: string, name: string) => void;
+
+  // Match management (within current session)
+  addStagedMatch: (match: MatchInput) => void;
+  removeStagedMatch: (matchId: string) => void;
+  updateStagedMatch: (matchId: string, match: Partial<MatchInput>) => void;
+  commitStagedMatches: () => void; // Move staged matches to matches
+  clearStagedMatches: () => void;
+  deleteMatch: (matchId: string) => void; // Delete from matches
+  updateMatch: (matchId: string, match: Partial<MatchInput>) => void;
   clearAllMatches: () => void;
-  addStagedMatch: (match: MatchInput) => void; // 스테이징에 경기 추가
-  removeStagedMatch: (id: string) => void; // 스테이징에서 경기 제거
-  commitStagedMatches: () => void; // 스테이징의 모든 경기를 실제 matches로 이동하고 집계
-  clearStagedMatches: () => void; // 스테이징 비우기
+
+  // Toast
   showToast: (message: string) => void;
   hideToast: () => void;
+
+  // Initial setup
+  completeInitialSetup: () => void;
 }

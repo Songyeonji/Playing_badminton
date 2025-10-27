@@ -2,13 +2,13 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import localforage from 'localforage';
 import { nanoid } from 'nanoid';
-import type { AppState, MatchInput } from '@/types';
+import type { AppState, MatchInput, SessionSettings, Session } from '@/types';
 
 // Configure localforage for IndexedDB
 localforage.config({
   driver: localforage.INDEXEDDB,
   name: 'BadmintonMatchTracker',
-  version: 1.0,
+  version: 2.0,
   storeName: 'app_state',
   description: 'Badminton match tracking data',
 });
@@ -29,67 +29,183 @@ const localforageStorage = {
 
 export const useAppStore = create<AppState>()(
   persist(
-    (set) => ({
-      settings: {
-        totalPoints: 21,
-        mergePlayersByName: true,
-        teamAName: '팀 A',
-        teamBName: '팀 B',
-        initialSetupDone: false,
-      },
-      matches: [],
-      stagedMatches: [],
+    (set, get) => ({
+      sessions: [],
+      currentSessionId: null,
       toastMessage: null,
+      initialSetupDone: false,
 
-      setSettings: (newSettings) =>
+      // Session management
+      createSession: (name: string, settings: SessionSettings) => {
+        const sessionId = nanoid();
+        const newSession: Session = {
+          id: sessionId,
+          name,
+          createdAt: Date.now(),
+          settings,
+          matches: [],
+          stagedMatches: [],
+        };
         set((state) => ({
-          settings: { ...state.settings, ...newSettings },
+          sessions: [...state.sessions, newSession],
+          currentSessionId: sessionId,
+        }));
+        return sessionId;
+      },
+
+      deleteSession: (sessionId: string) =>
+        set((state) => ({
+          sessions: state.sessions.filter((s) => s.id !== sessionId),
+          currentSessionId:
+            state.currentSessionId === sessionId ? null : state.currentSessionId,
         })),
 
-      addMatch: (match) =>
-        set((state) => ({
-          matches: [...state.matches, match],
+      setCurrentSession: (sessionId: string | null) =>
+        set(() => ({
+          currentSessionId: sessionId,
         })),
 
-      updateMatch: (id, updates) =>
+      updateSessionSettings: (sessionId: string, settings: Partial<SessionSettings>) =>
         set((state) => ({
-          matches: state.matches.map((match) =>
-            match.id === id ? { ...match, ...updates } : match
+          sessions: state.sessions.map((session) =>
+            session.id === sessionId
+              ? { ...session, settings: { ...session.settings, ...settings } }
+              : session
           ),
         })),
 
-      deleteMatch: (id) =>
+      renameSession: (sessionId: string, name: string) =>
         set((state) => ({
-          matches: state.matches.filter((match) => match.id !== id),
+          sessions: state.sessions.map((session) =>
+            session.id === sessionId ? { ...session, name } : session
+          ),
         })),
 
-      clearAllMatches: () =>
-        set(() => ({
-          matches: [],
-        })),
+      // Match management (within current session)
+      addStagedMatch: (match: MatchInput) =>
+        set((state) => {
+          const currentSessionId = state.currentSessionId;
+          if (!currentSessionId) return state;
+          return {
+            sessions: state.sessions.map((session) =>
+              session.id === currentSessionId
+                ? { ...session, stagedMatches: [...session.stagedMatches, match] }
+                : session
+            ),
+          };
+        }),
 
-      addStagedMatch: (match) =>
-        set((state) => ({
-          stagedMatches: [...state.stagedMatches, match],
-        })),
+      removeStagedMatch: (matchId: string) =>
+        set((state) => {
+          const currentSessionId = state.currentSessionId;
+          if (!currentSessionId) return state;
+          return {
+            sessions: state.sessions.map((session) =>
+              session.id === currentSessionId
+                ? {
+                    ...session,
+                    stagedMatches: session.stagedMatches.filter((m) => m.id !== matchId),
+                  }
+                : session
+            ),
+          };
+        }),
 
-      removeStagedMatch: (id) =>
-        set((state) => ({
-          stagedMatches: state.stagedMatches.filter((match) => match.id !== id),
-        })),
+      updateStagedMatch: (matchId: string, updates: Partial<MatchInput>) =>
+        set((state) => {
+          const currentSessionId = state.currentSessionId;
+          if (!currentSessionId) return state;
+          return {
+            sessions: state.sessions.map((session) =>
+              session.id === currentSessionId
+                ? {
+                    ...session,
+                    stagedMatches: session.stagedMatches.map((m) =>
+                      m.id === matchId ? { ...m, ...updates } : m
+                    ),
+                  }
+                : session
+            ),
+          };
+        }),
 
       commitStagedMatches: () =>
-        set((state) => ({
-          matches: [...state.matches, ...state.stagedMatches],
-          stagedMatches: [],
-        })),
+        set((state) => {
+          const currentSessionId = state.currentSessionId;
+          if (!currentSessionId) return state;
+          return {
+            sessions: state.sessions.map((session) =>
+              session.id === currentSessionId
+                ? {
+                    ...session,
+                    matches: [...session.matches, ...session.stagedMatches],
+                    stagedMatches: [],
+                  }
+                : session
+            ),
+          };
+        }),
 
       clearStagedMatches: () =>
-        set(() => ({
-          stagedMatches: [],
-        })),
+        set((state) => {
+          const currentSessionId = state.currentSessionId;
+          if (!currentSessionId) return state;
+          return {
+            sessions: state.sessions.map((session) =>
+              session.id === currentSessionId
+                ? { ...session, stagedMatches: [] }
+                : session
+            ),
+          };
+        }),
 
-      showToast: (message) =>
+      deleteMatch: (matchId: string) =>
+        set((state) => {
+          const currentSessionId = state.currentSessionId;
+          if (!currentSessionId) return state;
+          return {
+            sessions: state.sessions.map((session) =>
+              session.id === currentSessionId
+                ? {
+                    ...session,
+                    matches: session.matches.filter((m) => m.id !== matchId),
+                  }
+                : session
+            ),
+          };
+        }),
+
+      updateMatch: (matchId: string, updates: Partial<MatchInput>) =>
+        set((state) => {
+          const currentSessionId = state.currentSessionId;
+          if (!currentSessionId) return state;
+          return {
+            sessions: state.sessions.map((session) =>
+              session.id === currentSessionId
+                ? {
+                    ...session,
+                    matches: session.matches.map((m) =>
+                      m.id === matchId ? { ...m, ...updates } : m
+                    ),
+                  }
+                : session
+            ),
+          };
+        }),
+
+      clearAllMatches: () =>
+        set((state) => {
+          const currentSessionId = state.currentSessionId;
+          if (!currentSessionId) return state;
+          return {
+            sessions: state.sessions.map((session) =>
+              session.id === currentSessionId ? { ...session, matches: [] } : session
+            ),
+          };
+        }),
+
+      // Toast
+      showToast: (message: string) =>
         set(() => ({
           toastMessage: { id: nanoid(), message },
         })),
@@ -98,9 +214,15 @@ export const useAppStore = create<AppState>()(
         set(() => ({
           toastMessage: null,
         })),
+
+      // Initial setup
+      completeInitialSetup: () =>
+        set(() => ({
+          initialSetupDone: true,
+        })),
     }),
     {
-      name: 'badminton-match-storage',
+      name: 'badminton-match-storage-v2',
       storage: createJSONStorage(() => localforageStorage),
     }
   )
