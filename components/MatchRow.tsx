@@ -30,11 +30,11 @@ export default function MatchRow() {
     const valB = parseInt(scoreB) || 0;
 
     if (valA > maxWinPoints) {
-      showToast(`총점 ${settings.totalPoints} 규칙: ${settings.teamAName} 점수는 ${maxWinPoints}점을 넘을 수 없습니다.`);
+      showToast(`총점 ${settings.totalPoints} 규칙: ${settings.teamAName} 점수는 ${maxWinPoints}점을 넘을 수 없습니다.`, 'error');
       newErrors.push(`${settings.teamAName} 점수는 ${maxWinPoints}점을 초과할 수 없습니다`);
     }
     if (valB > maxWinPoints) {
-      showToast(`총점 ${settings.totalPoints} 규칙: ${settings.teamBName} 점수는 ${maxWinPoints}점을 넘을 수 없습니다.`);
+      showToast(`총점 ${settings.totalPoints} 규칙: ${settings.teamBName} 점수는 ${maxWinPoints}점을 넘을 수 없습니다.`, 'error');
       newErrors.push(`${settings.teamBName} 점수는 ${maxWinPoints}점을 초과할 수 없습니다`);
     }
 
@@ -62,11 +62,11 @@ export default function MatchRow() {
     const maxWinPoints = settings.totalPoints === 21 ? 11 : 13;
 
     if (valA > maxWinPoints) {
-      showToast(`총점 ${settings.totalPoints} 규칙: ${settings.teamAName} 점수는 ${maxWinPoints}점을 넘을 수 없습니다.`);
+      showToast(`총점 ${settings.totalPoints} 규칙: ${settings.teamAName} 점수는 ${maxWinPoints}점을 넘을 수 없습니다.`, 'error');
       newErrors.push(`${settings.teamAName} 점수는 ${maxWinPoints}점을 초과할 수 없습니다`);
     }
     if (valB > maxWinPoints) {
-      showToast(`총점 ${settings.totalPoints} 규칙: ${settings.teamBName} 점수는 ${maxWinPoints}점을 넘을 수 없습니다.`);
+      showToast(`총점 ${settings.totalPoints} 규칙: ${settings.teamBName} 점수는 ${maxWinPoints}점을 넘을 수 없습니다.`, 'error');
       newErrors.push(`${settings.teamBName} 점수는 ${maxWinPoints}점을 초과할 수 없습니다`);
     }
 
@@ -100,7 +100,7 @@ export default function MatchRow() {
     setScoreB('');
     setErrors([]);
 
-    showToast('경기가 추가되었습니다. "한번에 집계하기"를 눌러주세요.');
+    showToast('경기가 추가되었습니다. "한번에 집계하기"를 눌러주세요.', 'success');
   };
 
   return (
@@ -112,14 +112,14 @@ export default function MatchRow() {
             value={teamA1}
             onChange={(e) => setTeamA1(e.target.value)}
             placeholder="선수1"
-            className="flex-1 sm:w-28 px-3 py-3 border-2 border-cyan-500 rounded-lg focus:outline-none focus:border-cyan-600 bg-white text-gray-900 font-medium text-base placeholder-gray-400"
+            className="flex-1 sm:w-28 px-2 py-2 sm:px-3 sm:py-3 border-2 border-cyan-500 rounded-lg focus:outline-none focus:border-cyan-600 bg-white text-gray-900 font-medium text-sm sm:text-base placeholder-gray-400"
           />
           <input
             type="text"
             value={teamA2}
             onChange={(e) => setTeamA2(e.target.value)}
             placeholder="선수2"
-            className="flex-1 sm:w-28 px-3 py-3 border-2 border-cyan-500 rounded-lg focus:outline-none focus:border-cyan-600 bg-white text-gray-900 font-medium text-base placeholder-gray-400"
+            className="flex-1 sm:w-28 px-2 py-2 sm:px-3 sm:py-3 border-2 border-cyan-500 rounded-lg focus:outline-none focus:border-cyan-600 bg-white text-gray-900 font-medium text-sm sm:text-base placeholder-gray-400"
           />
         </div>
 
@@ -132,9 +132,9 @@ export default function MatchRow() {
             onChange={(e) => setScoreA(e.target.value)}
             onBlur={validateOnBlur}
             placeholder="0"
-            className="w-16 px-2 py-3 border-2 border-cyan-500 rounded-lg text-center font-bold bg-white text-gray-900 text-lg focus:outline-none focus:border-cyan-600"
+            className="w-12 sm:w-16 px-1 py-2 sm:px-2 sm:py-3 border-2 border-cyan-500 rounded-lg text-center font-bold bg-white text-gray-900 text-base sm:text-lg focus:outline-none focus:border-cyan-600"
           />
-          <span className="text-2xl font-bold text-gray-600">:</span>
+          <span className="text-xl sm:text-2xl font-bold text-gray-600">:</span>
           <input
             type="text"
             inputMode="numeric"
@@ -143,7 +143,7 @@ export default function MatchRow() {
             onChange={(e) => setScoreB(e.target.value)}
             onBlur={validateOnBlur}
             placeholder="0"
-            className="w-16 px-2 py-3 border-2 border-emerald-500 rounded-lg text-center font-bold bg-white text-gray-900 text-lg focus:outline-none focus:border-emerald-600"
+            className="w-12 sm:w-16 px-1 py-2 sm:px-2 sm:py-3 border-2 border-emerald-500 rounded-lg text-center font-bold bg-white text-gray-900 text-base sm:text-lg focus:outline-none focus:border-emerald-600"
           />
         </div>
 
@@ -153,14 +153,14 @@ export default function MatchRow() {
             value={teamB1}
             onChange={(e) => setTeamB1(e.target.value)}
             placeholder="선수3"
-            className="flex-1 sm:w-28 px-3 py-3 border-2 border-emerald-500 rounded-lg focus:outline-none focus:border-emerald-600 bg-white text-gray-900 font-medium text-base placeholder-gray-400"
+            className="flex-1 sm:w-28 px-2 py-2 sm:px-3 sm:py-3 border-2 border-emerald-500 rounded-lg focus:outline-none focus:border-emerald-600 bg-white text-gray-900 font-medium text-sm sm:text-base placeholder-gray-400"
           />
           <input
             type="text"
             value={teamB2}
             onChange={(e) => setTeamB2(e.target.value)}
             placeholder="선수4"
-            className="flex-1 sm:w-28 px-3 py-3 border-2 border-emerald-500 rounded-lg focus:outline-none focus:border-emerald-600 bg-white text-gray-900 font-medium text-base placeholder-gray-400"
+            className="flex-1 sm:w-28 px-2 py-2 sm:px-3 sm:py-3 border-2 border-emerald-500 rounded-lg focus:outline-none focus:border-emerald-600 bg-white text-gray-900 font-medium text-sm sm:text-base placeholder-gray-400"
           />
         </div>
       </div>
@@ -178,9 +178,9 @@ export default function MatchRow() {
       <div className="mt-4">
         <button
           onClick={handleAddMatch}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-all shadow-md hover:shadow-lg font-bold text-base"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-all shadow-md hover:shadow-lg font-bold text-sm sm:text-base"
         >
-          <IoAddCircle className="text-xl" />
+          <IoAddCircle className="text-lg sm:text-xl" />
           경기 추가
         </button>
       </div>

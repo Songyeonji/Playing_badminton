@@ -44,9 +44,12 @@ export interface Session {
   stagedMatches: MatchInput[]; // 스테이징 영역: 아직 집계되지 않은 경기들
 }
 
+export type ToastType = 'success' | 'error' | 'info';
+
 export interface ToastMessage {
   id: string;
   message: string;
+  type: ToastType;
 }
 
 export interface AppState {
@@ -73,7 +76,7 @@ export interface AppState {
   clearAllMatches: () => void;
 
   // Toast
-  showToast: (message: string) => void;
+  showToast: (message: string, type?: ToastType) => void;
   hideToast: () => void;
 
   // Initial setup

@@ -48,29 +48,31 @@ export default function SessionPage() {
         <Toast
           key={toastMessage.id}
           message={toastMessage.message}
+          type={toastMessage.type}
           onClose={hideToast}
         />
       )}
 
       {/* Header */}
       <div className="bg-cyan-600 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <GiShuttlecock className="text-3xl text-white" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <GiShuttlecock className="text-2xl sm:text-3xl text-white" />
               <div>
-                <h1 className="text-2xl font-bold text-white">{session.name}</h1>
-                <p className="text-sm text-cyan-100">
+                <h1 className="text-lg sm:text-2xl font-bold text-white">{session.name}</h1>
+                <p className="text-xs sm:text-sm text-cyan-100">
                   총점: {session.settings.totalPoints}점
                 </p>
               </div>
             </div>
             <button
               onClick={() => router.push('/')}
-              className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors font-medium"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors font-medium text-xs sm:text-base"
             >
-              <FaHome />
-              메인으로
+              <FaHome className="text-sm sm:text-base" />
+              <span className="hidden sm:inline">메인으로</span>
+              <span className="sm:hidden">메인</span>
             </button>
           </div>
         </div>
@@ -80,8 +82,8 @@ export default function SessionPage() {
         <div className="space-y-8">
           {/* New Match Entry Section */}
           <section>
-            <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800 mb-4">
-              <FaPlus className="text-cyan-600" />
+            <h2 className="flex items-center gap-2 text-lg sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
+              <FaPlus className="text-base sm:text-xl text-cyan-600" />
               새 경기 추가
             </h2>
             <MatchRow />
@@ -99,8 +101,8 @@ export default function SessionPage() {
 
           {/* Aggregate Results Section */}
           <section>
-            <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800 mb-4">
-              <IoStatsChart className="text-cyan-600" />
+            <h2 className="flex items-center gap-2 text-lg sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
+              <IoStatsChart className="text-base sm:text-xl text-cyan-600" />
               집계 결과
             </h2>
             <AggregateTable />

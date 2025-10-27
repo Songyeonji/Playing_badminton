@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import localforage from 'localforage';
 import { nanoid } from 'nanoid';
-import type { AppState, MatchInput, SessionSettings, Session } from '@/types';
+import type { AppState, MatchInput, SessionSettings, Session, ToastType } from '@/types';
 
 // Configure localforage for IndexedDB
 localforage.config({
@@ -205,9 +205,9 @@ export const useAppStore = create<AppState>()(
         }),
 
       // Toast
-      showToast: (message: string) =>
+      showToast: (message: string, type: ToastType = 'info') =>
         set(() => ({
-          toastMessage: { id: nanoid(), message },
+          toastMessage: { id: nanoid(), message, type },
         })),
 
       hideToast: () =>
