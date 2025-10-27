@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { useAppStore } from '@/lib/store';
 import MatchRow from './MatchRow';
 import type { MatchInput } from '@/types';
+import { IoAddCircle, IoTrash, IoTrophy } from 'react-icons/io5';
+import { MdEdit, MdDeleteSweep } from 'react-icons/md';
+import { FaListUl } from 'react-icons/fa';
 
 export default function MatchList() {
   const { matches, clearAllMatches } = useAppStore();
@@ -20,21 +23,26 @@ export default function MatchList() {
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-900">경기 목록</h2>
+        <h2 className="flex items-center gap-2 text-xl font-bold text-gray-900">
+          <FaListUl className="text-blue-600" />
+          경기 목록
+        </h2>
         <div className="flex gap-2">
           {matches.length > 0 && (
             <button
               onClick={handleClearAll}
-              className="px-4 py-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors text-sm font-medium no-print"
+              className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors text-sm font-medium no-print"
             >
+              <MdDeleteSweep className="text-lg" />
               전체 삭제
             </button>
           )}
           <button
             onClick={() => setShowNewMatch(true)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium no-print"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium no-print shadow-md"
           >
-            + 경기 추가
+            <IoAddCircle className="text-lg" />
+            경기 추가
           </button>
         </div>
       </div>
@@ -113,9 +121,10 @@ function MatchCard({ match, onEdit }: MatchCardProps) {
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
-            <span className={`text-sm font-semibold px-2 py-1 rounded ${
+            <span className={`flex items-center gap-1 text-sm font-semibold px-2 py-1 rounded ${
               winner === 'A' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
             }`}>
+              {winner === 'A' && <IoTrophy />}
               팀 A
             </span>
             <span className="text-sm text-gray-600">
@@ -123,9 +132,10 @@ function MatchCard({ match, onEdit }: MatchCardProps) {
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className={`text-sm font-semibold px-2 py-1 rounded ${
+            <span className={`flex items-center gap-1 text-sm font-semibold px-2 py-1 rounded ${
               winner === 'B' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
             }`}>
+              {winner === 'B' && <IoTrophy />}
               팀 B
             </span>
             <span className="text-sm text-gray-600">
@@ -137,14 +147,16 @@ function MatchCard({ match, onEdit }: MatchCardProps) {
         <div className="flex gap-2 no-print">
           <button
             onClick={onEdit}
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
           >
+            <MdEdit className="text-lg" />
             편집
           </button>
           <button
             onClick={handleDelete}
-            className="text-red-600 hover:text-red-800 text-sm font-medium"
+            className="flex items-center gap-1 text-red-600 hover:text-red-800 text-sm font-medium"
           >
+            <IoTrash className="text-lg" />
             삭제
           </button>
         </div>

@@ -4,6 +4,8 @@ import { useMemo, useRef } from 'react';
 import { useAppStore } from '@/lib/store';
 import { aggregateMatches, sortPlayersByRank } from '@/utils/aggregation';
 import { exportToExcel, exportToCSV, exportToPNG, generateFilename } from '@/utils/export';
+import { FaFileExcel, FaFileCsv, FaFileImage, FaTrophy, FaMedal } from 'react-icons/fa';
+import { IoStatsChart } from 'react-icons/io5';
 
 export default function AggregateTable() {
   const { matches, settings } = useAppStore();
@@ -53,24 +55,27 @@ export default function AggregateTable() {
   return (
     <div className="space-y-4">
       {/* Export Buttons */}
-      <div className="flex flex-wrap gap-2 no-print">
+      <div className="flex flex-wrap gap-3 no-print">
         <button
           onClick={handleExportExcel}
-          className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors text-sm font-medium"
+          className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
-          📊 엑셀 저장
+          <FaFileExcel className="text-lg" />
+          엑셀 저장
         </button>
         <button
           onClick={handleExportCSV}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
-          📄 CSV 저장
+          <FaFileCsv className="text-lg" />
+          CSV 저장
         </button>
         <button
           onClick={handleExportPNG}
-          className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm font-medium"
+          className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all text-sm font-medium shadow-md hover:shadow-lg"
         >
-          🖼️ PNG 저장
+          <FaFileImage className="text-lg" />
+          PNG 저장
         </button>
       </div>
 
@@ -78,10 +83,13 @@ export default function AggregateTable() {
       <div ref={tableRef} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
               <tr>
                 <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  순위
+                  <div className="flex items-center gap-1">
+                    <FaTrophy className="text-yellow-500" />
+                    순위
+                  </div>
                 </th>
                 <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   선수명
@@ -116,10 +124,15 @@ export default function AggregateTable() {
               {sortedPlayers.map((player, index) => (
                 <tr
                   key={player.name}
-                  className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                  className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50 transition-colors`}
                 >
-                  <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {index + 1}
+                  <td className="px-3 py-4 whitespace-nowrap text-sm font-medium">
+                    <div className="flex items-center gap-2">
+                      {index === 0 && <FaMedal className="text-yellow-400 text-lg" />}
+                      {index === 1 && <FaMedal className="text-gray-400 text-lg" />}
+                      {index === 2 && <FaMedal className="text-amber-700 text-lg" />}
+                      <span className={index < 3 ? 'font-bold text-lg' : ''}>{index + 1}</span>
+                    </div>
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {player.name}

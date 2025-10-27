@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import type { MatchInput, SetScore } from '@/types';
 import { useAppStore } from '@/lib/store';
+import { IoAddCircle, IoRemoveCircle, IoSave, IoTrash, IoClose } from 'react-icons/io5';
+import { FaUsers } from 'react-icons/fa';
 
 interface MatchRowProps {
   match?: MatchInput;
@@ -106,10 +108,11 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 mb-4 hover:shadow-lg transition-shadow">
       {/* Team A */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <FaUsers className="text-blue-600" />
           팀 A
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -132,7 +135,8 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
 
       {/* Team B */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <FaUsers className="text-red-600" />
           팀 B
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -182,9 +186,10 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
               {sets.length > 1 && (
                 <button
                   onClick={() => handleRemoveSet(index)}
-                  className="text-red-600 hover:text-red-800 text-sm"
+                  className="text-red-600 hover:text-red-800 text-xl flex items-center gap-1"
+                  title="세트 삭제"
                 >
-                  삭제
+                  <IoRemoveCircle />
                 </button>
               )}
             </div>
@@ -193,9 +198,10 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
         {sets.length < 5 && (
           <button
             onClick={handleAddSet}
-            className="mt-2 text-sm text-blue-600 hover:text-blue-800"
+            className="mt-2 flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium"
           >
-            + 세트 추가
+            <IoAddCircle className="text-lg" />
+            세트 추가
           </button>
         )}
       </div>
@@ -215,23 +221,26 @@ export default function MatchRow({ match, onSave, onCancel }: MatchRowProps) {
       <div className="flex gap-2">
         <button
           onClick={handleSave}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors shadow-sm"
         >
+          <IoSave className="text-lg" />
           저장
         </button>
         {match && (
           <button
             onClick={handleDelete}
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors shadow-sm"
           >
+            <IoTrash className="text-lg" />
             삭제
           </button>
         )}
         {onCancel && (
           <button
             onClick={onCancel}
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
           >
+            <IoClose className="text-lg" />
             취소
           </button>
         )}
