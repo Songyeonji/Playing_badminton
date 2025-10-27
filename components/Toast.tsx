@@ -18,8 +18,8 @@ export default function Toast({ message, onClose, duration = 3000 }: ToastProps)
   }, [duration, onClose]);
 
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
-      <div className="bg-primary text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 min-w-[300px] max-w-[90vw]">
+    <div className="fixed top-4 right-4 z-50 animate-fade-in">
+      <div className="bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 min-w-[300px] max-w-[90vw]">
         <FiAlertCircle className="text-2xl flex-shrink-0" />
         <p className="flex-1 font-medium text-base">{message}</p>
         <button

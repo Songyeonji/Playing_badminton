@@ -35,14 +35,14 @@ export default function StagingList() {
   };
 
   return (
-    <div className="bg-surface rounded-xl shadow-lg border-2 border-accent p-6 mb-6">
+    <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6 mb-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-bold text-gray-900">
           추가된 경기 ({session.stagedMatches.length}개)
         </h3>
         <div className="flex gap-2">
-          <button onClick={handleClear} className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium text-sm">전체 삭제</button>
-          <button onClick={handleCommit} className="flex items-center gap-2 px-6 py-2 bg-teal text-white rounded-lg hover:bg-opacity-90 transition-colors font-bold text-base shadow-md">
+          <button onClick={handleClear} className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium text-sm">전체 삭제</button>
+          <button onClick={handleCommit} className="flex items-center gap-2 px-6 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors font-bold text-base shadow-md">
             <IoCheckmarkCircle className="text-xl" />
             한번에 집계하기
           </button>
@@ -52,11 +52,11 @@ export default function StagingList() {
         {session.stagedMatches.map((match) => {
           const summary = getMatchSummary(match);
           return (
-            <div key={match.id} className="bg-white p-4 rounded-lg border-2 border-accent flex items-center justify-between">
+            <div key={match.id} className="bg-gray-50 p-4 rounded-lg border-2 border-gray-200 flex items-center justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="font-bold text-gray-900">{match.teamA[0]}, {match.teamA[1]}</div>
-                  <div className="px-3 py-1 bg-darkTeal text-white font-bold rounded text-sm">VS</div>
+                  <div className="px-3 py-1 bg-cyan-600 text-white font-bold rounded text-sm">VS</div>
                   <div className="font-bold text-gray-900">{match.teamB[0]}, {match.teamB[1]}</div>
                 </div>
                 <div className="text-sm text-gray-700">

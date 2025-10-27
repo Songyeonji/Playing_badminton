@@ -11,14 +11,12 @@ interface InitialSetupModalProps {
 
 export default function InitialSetupModal({ onComplete }: InitialSetupModalProps) {
   const [selectedPoints, setSelectedPoints] = useState<TotalPoints>(21);
-  const [teamAName, setTeamAName] = useState('팀 A');
-  const [teamBName, setTeamBName] = useState('팀 B');
 
   const handleConfirm = () => {
     onComplete({
       totalPoints: selectedPoints,
-      teamAName: teamAName.trim() || '팀 A',
-      teamBName: teamBName.trim() || '팀 B',
+      teamAName: '팀 A',
+      teamBName: '팀 B',
     });
   };
 
@@ -27,13 +25,13 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 transform transition-all max-h-[90vh] overflow-y-auto">
         {/* Icon */}
         <div className="flex justify-center mb-6">
-          <div className="bg-darkTeal rounded-full p-6">
+          <div className="bg-cyan-600 rounded-full p-6">
             <GiShuttlecock className="text-6xl text-white" />
           </div>
         </div>
 
         {/* Title */}
-        <h2 className="text-3xl font-bold text-center mb-2 text-darkTeal">
+        <h2 className="text-3xl font-bold text-center mb-2 text-cyan-700">
           배드민턴 경기 기록
         </h2>
         <p className="text-center text-gray-600 mb-8 text-lg">
@@ -50,14 +48,14 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
               onClick={() => setSelectedPoints(21)}
               className={`relative p-6 rounded-xl border-4 transition-all ${
                 selectedPoints === 21
-                  ? 'border-teal bg-lightTeal/20 shadow-lg scale-105'
-                  : 'border-gray-200 bg-white hover:border-accent hover:shadow-md'
+                  ? 'border-cyan-500 bg-cyan-50 shadow-lg scale-105'
+                  : 'border-gray-200 bg-white hover:border-cyan-300 hover:shadow-md'
               }`}
             >
               {selectedPoints === 21 && (
-                <IoCheckmarkCircle className="absolute top-2 right-2 text-3xl text-teal" />
+                <IoCheckmarkCircle className="absolute top-2 right-2 text-3xl text-cyan-500" />
               )}
-              <div className="text-5xl font-bold text-teal mb-2">21</div>
+              <div className="text-5xl font-bold text-cyan-600 mb-2">21</div>
               <div className="text-sm text-gray-700 font-medium">일반 경기</div>
               <div className="text-xs text-gray-500 mt-1">승리 시 11점</div>
             </button>
@@ -66,14 +64,14 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
               onClick={() => setSelectedPoints(25)}
               className={`relative p-6 rounded-xl border-4 transition-all ${
                 selectedPoints === 25
-                  ? 'border-accent bg-lightTeal/20 shadow-lg scale-105'
-                  : 'border-gray-200 bg-white hover:border-accent hover:shadow-md'
+                  ? 'border-emerald-500 bg-emerald-50 shadow-lg scale-105'
+                  : 'border-gray-200 bg-white hover:border-emerald-300 hover:shadow-md'
               }`}
             >
               {selectedPoints === 25 && (
-                <IoCheckmarkCircle className="absolute top-2 right-2 text-3xl text-accent" />
+                <IoCheckmarkCircle className="absolute top-2 right-2 text-3xl text-emerald-500" />
               )}
-              <div className="text-5xl font-bold text-accent mb-2">25</div>
+              <div className="text-5xl font-bold text-emerald-600 mb-2">25</div>
               <div className="text-sm text-gray-700 font-medium">특별 경기</div>
               <div className="text-xs text-gray-500 mt-1">승리 시 13점</div>
             </button>
@@ -84,7 +82,7 @@ export default function InitialSetupModal({ onComplete }: InitialSetupModalProps
         {/* Confirm Button */}
         <button
           onClick={handleConfirm}
-          className="w-full py-4 bg-teal text-white text-lg font-bold rounded-xl hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl"
+          className="w-full py-4 bg-cyan-600 text-white text-lg font-bold rounded-xl hover:bg-cyan-700 transition-all shadow-lg hover:shadow-xl"
         >
           시작하기
         </button>

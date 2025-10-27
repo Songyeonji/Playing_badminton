@@ -7,7 +7,7 @@ import Toast from '@/components/Toast';
 import MatchRow from '@/components/MatchRow';
 import StagingList from '@/components/StagingList';
 import AggregateTable from '@/components/AggregateTable';
-import { FaHome, FaPlus } from 'react-icons/fa';
+import { FaHome, FaPlus, FaInstagram } from 'react-icons/fa';
 import { IoStatsChart } from 'react-icons/io5';
 import { GiShuttlecock } from 'react-icons/gi';
 
@@ -42,7 +42,7 @@ export default function SessionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-bgCustom">
+    <div className="min-h-screen bg-gray-50">
       {toastMessage && (
         <Toast
           key={toastMessage.id}
@@ -52,14 +52,14 @@ export default function SessionPage() {
       )}
 
       {/* Header */}
-      <div className="bg-darkTeal shadow-lg">
+      <div className="bg-cyan-600 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <GiShuttlecock className="text-3xl text-white" />
               <div>
                 <h1 className="text-2xl font-bold text-white">{session.name}</h1>
-                <p className="text-sm text-lightTeal">
+                <p className="text-sm text-cyan-100">
                   {session.settings.teamAName} vs {session.settings.teamBName} | {session.settings.totalPoints}점
                 </p>
               </div>
@@ -75,12 +75,12 @@ export default function SessionPage() {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32">
         <div className="space-y-8">
           {/* New Match Entry Section */}
           <section>
             <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800 mb-4">
-              <FaPlus className="text-teal" />
+              <FaPlus className="text-cyan-600" />
               새 경기 추가
             </h2>
             <MatchRow />
@@ -94,7 +94,7 @@ export default function SessionPage() {
           {/* Aggregate Results Section */}
           <section>
             <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-800 mb-4">
-              <IoStatsChart className="text-teal" />
+              <IoStatsChart className="text-cyan-600" />
               집계 결과
             </h2>
             <AggregateTable />
@@ -103,13 +103,26 @@ export default function SessionPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-cream border-t-2 border-accent mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-sm text-gray-700">
-            <p className="font-semibold">배드민턴 경기 기록 v2.0</p>
-            <p className="mt-1">
-              데이터는 브라우저에 안전하게 저장됩니다 (IndexedDB)
-            </p>
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <span>© moon._.kkkok</span>
+              <span className="text-gray-400">|</span>
+              <span>개발자: songyounji</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-xs">배드민턴 경기 기록 v2.0 • 데이터는 브라우저에 안전하게 저장됩니다 (IndexedDB)</span>
+              <a
+                href="https://www.instagram.com/moon._.kkkok?igsh=MXd6bnNjNXE0bTBoMw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-600 hover:text-pink-700 transition-colors"
+                title="Instagram"
+              >
+                <FaInstagram className="text-xl" />
+              </a>
+            </div>
           </div>
         </div>
       </footer>
