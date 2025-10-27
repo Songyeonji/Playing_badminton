@@ -80,18 +80,31 @@ npm start
 
 ## 배포
 
-### Vercel 배포
+### GitHub Actions 자동 배포 (권장)
 
-1. GitHub 레포지토리에 코드 푸시
-2. [Vercel](https://vercel.com)에서 Import
-3. 자동 빌드 및 배포
+이 프로젝트는 GitHub Actions를 통해 자동으로 Vercel에 배포됩니다.
 
-또는 Vercel CLI 사용:
+**설정 방법:**
+1. [VERCEL_SETUP.md](./VERCEL_SETUP.md) 파일의 가이드를 따라 설정
+2. GitHub Secrets에 Vercel 토큰 및 프로젝트 ID 추가
+3. 코드 푸시 시 자동으로 배포됨
+
+**자동 배포 동작:**
+- `claude/badminton-match-tracker-011CUXi3mEhashUypVFBc3GR` 브랜치에 푸시 → Production 배포
+- Pull Request 생성 → Preview 배포
+
+### 수동 배포 (Vercel CLI)
 
 ```bash
 npm i -g vercel
-vercel
+vercel --prod
 ```
+
+### Vercel 웹사이트를 통한 배포
+
+1. [Vercel](https://vercel.com)에서 GitHub 연동
+2. `Playing_badminton` 레포지토리 Import
+3. 브랜치 선택 후 Deploy
 
 ## 프로젝트 구조
 
